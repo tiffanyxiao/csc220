@@ -29,54 +29,70 @@ is more efficient than the recursive solution
 correctly returns the shortest string that contains both input strings as a subsequence
 *Note* to get efficiency-related points, you must include a brief discussion of the program's efficiency in your README
 '''
-import numpy as np
+
 
 def intersection(string1, string2, len_string1, len_string2):
     #fill in everything with zeros
-    matrix = [[0 for col in range(len_string1)] for row in range(len_string2)]
+    matrix = [[0 for col in range(len_string1+1)] for row in range(len_string2+1)]
     #string1 is associated with horizontal diraction
     #string2 is associated with vertical direction
 
 
+
+    ##start building matrix todo find a better way to insert letters
+    for col in range (len_string1):
+        for row in range (len_string2):
+            if (row == 0):
+                matrix[row][col+1] = string1[col]
+            if (col == 0):
+                matrix[row+1][col] = string2[row]
+
+    matchList =  []
     #fill in 1's with matches
     for col in range (0,len_string1):
         for row in range (0,len_string2):
-            if (string1[col] == string2[row]):
-                matrix[row][col] = str(row) + " " + str(col)
+            if (matrix[row][col] == matrix[row][0]):
+                matrix[row][col] = 1
+                #matrix[row][col] = [row,col] #temp
+                matchList.append([row,col])
+            # else:
+            #     matrix[row][col] = [0,0] #temp
 
+    print(matchList)
+    help_print(matrix)
 
-    a = np.array(matrix)
-    diags = [a[::-1,:].diagonal(i) for i in range(-a.shape[0]+1,a.shape[1])]
+    #fill in unused spot
+    matrix[0][0] = "-"
+
 
 
     ##end building matrix
+
     long_str = ""
     long_str_len = 0
 
 
-    for item in diags:
-        if (item[0] != '0' or item[len(item)-1] != '0'):
 
-            count_similar = len([x for x in item if x != '0'])
-            if (long_item_len < count_similar):
+def countList(listOfList):
+    length = []
+    for list in listOfList:
+        best_count = 0
+        current_count = 0
+        for i in list:
+            if list[i]==1:
+                current_count = current_count+1
+                if current_count > best_count:
+                    best_count = current_count
+            else:
+                current_count = 0
+        length.append(best_count)
 
-            #print(item, "counted", count_similar)
-
-    good_diagonals = []
-    for item in diags:
-        if (item[0] != '0' or item[len(item)-1] != '0'): #cant intersect
-
-            for i in range(1,item-1):
-                found_zero = False
-
-                while (!found_zero):
-                    good_diagonals.append
-
-
-
-
-
-
+def help_see(matrix):
+    '''see how numbers are changed loop by loop through the matrix'''
+    for col in range (1,len_string1+1):
+        for row in range (1,len_string2+1):
+            matrix[row][col] = "-"
+            help_print(matrix)
 
 def help_print(matrix):
     '''print the matrix is view-friendly way'''
