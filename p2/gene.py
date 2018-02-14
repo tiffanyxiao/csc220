@@ -1,91 +1,83 @@
 '''
-Objective: given two strings representing snippets of genes (letters ACGT),
-identify the shortest string that could contain them both as subsequences.
+Authors: Heidi Tsang, Tiffany Xiao, Karen Santamaria
+Date: February  15, 2018
+Title: Gene Splicing
 
-
-********************************************
-string 1 – AACCTGT     string 2 – CTGTACG
-shortest string that has both as substring
-AACCTGTACG (length 10)
-********************************************
-
-The submission:
-
-successfully reads in a pair of strings
-outputs a string that contains both input strings as a subsequence
-checks to ensure input is valid before beginning calculation; if not, throws an exception
-Second level (2 points)
-
-The submission:
-
-correctly reports the length of the shortest string that contains both input strings
-as a subsequence (but possibly fails to return the string itself)
-is at least as efficient as the recursive solution i.e. no worse than O(2^n)
-Third level (2 points)
-
-The submission:
-
-is more efficient than the recursive solution
-correctly returns the shortest string that contains both input strings as a subsequence
-*Note* to get efficiency-related points, you must include a brief discussion of the program's efficiency in your README
+Given two strings representing snippets of genes (letters ACGT), identify the
+shortest string that could contain them both as subsequences.
 '''
-import numpy as np
 
-def intersection(string1, string2, len_string1, len_string2):
-    #fill in everything with zeros
-    matrix = [[0 for col in range(len_string1)] for row in range(len_string2)]
+def print_in_format(string1, string2, union_result):
+    '''print out the result in a pretty format'''
+    print("**************************************")
+    print("String 1 -", string1)
+    print("String 2 -", string2)
+    print("shortest string that has both as substring")
+    print(union_result, "(" + str(len(union_result)) + ")")
+    print("**************************************")
+
+def make_union_string(string1, string2,substring):
+    '''make the shortest string  that contains string1 and string2 as subsequences'''
+    union_result = ""
+    if string1.endswith(substring):
+        union_result = string1+ string2.replace(substring,"")
+    else:
+        union_result = string2+ string1.replace(substring,"")
+    return union_result
+
+def find_overlap(string1, string2, len_string1, len_string2):
+    '''find the substring that appear in both strings'''
+
     #string1 is associated with horizontal diraction
     #string2 is associated with vertical direction
-
+    #everything initially filled in with 0's
+    matrix = [[0 for col in range(len_string1)] for row in range(len_string2)]
 
     #fill in 1's with matches
     for col in range (0,len_string1):
         for row in range (0,len_string2):
             if (string1[col] == string2[row]):
-                matrix[row][col] = str(row) + " " + str(col)
+                matrix[row][col] = 1
+    #for every cell in the matrix, add the value of the upper-reight cell to the current cell
+    #so the value of the cells will be the number of cosecutive match if there is any
+    largest_count = 0
+    index_of_largest = []
+    for col in range (0,len_string1):
+        for row in range (0,len_string2):
+            if matrix[row][col] == 1 and row!=0 and col!=0:
+                matrix[row][col] = matrix[row][col] + matrix[row-1][col-1]
+                if matrix[row][col]>largest_count:
+                    largest_count = matrix[row][col]
+                    index_of_largest = [row,col]
+
+    #construct the substring
+    if (len(index_of_largest)>0):
+        overlap = string1[index_of_largest[1]]
+        for l in range(1, largest_count):
+            overlap = string1[index_of_largest[1]-l]+overlap
+
+    else:
+        overlap = ""
+    return overlap
 
 
-    a = np.array(matrix)
-    diags = [a[::-1,:].diagonal(i) for i in range(-a.shape[0]+1,a.shape[1])]
-
-
-    ##end building matrix
-    long_str = ""
-    long_str_len = 0
-
-
-    for item in diags:
-        if (item[0] != '0' or item[len(item)-1] != '0'):
-
-            count_similar = len([x for x in item if x != '0'])
-            if (long_item_len < count_similar):
-
-            #print(item, "counted", count_similar)
-
-    good_diagonals = []
-    for item in diags:
-        if (item[0] != '0' or item[len(item)-1] != '0'): #cant intersect
-
-            for i in range(1,item-1):
-                found_zero = False
-
-                while (!found_zero):
-                    good_diagonals.append
-
-
-
-
-
-
-
-def help_print(matrix):
-    '''print the matrix is view-friendly way'''
-    for i in matrix:
-        print(i)
 
 def main():
-    str_lst = ["A","C","T","G"]
-    string1 = "AACCTGT"
-    string2 = "CTGTACG"
-    string3 = intersection(string1,string2, len(string1), len(string2))
+    gene_lst = ["A","C","T","G"]
+
+    string1 = input("The first gene" + "\n")
+    string2 = input("The second gene" + "\n")
+
+    for l in string1:
+        if (l not in gene_lst):
+            raise ValueError('String1 is not a gene')
+
+
+    for l in string2:
+        if (l not in gene_lst):
+            raise ValueError('String2 is not a gene')
+
+    substring = find_overlap(string1,string2, len(string1), len(string2))
+    print_in_format(string1,string2,make_union_string(string1,string2, substring))
+
 main()
