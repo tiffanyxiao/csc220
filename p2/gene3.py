@@ -30,10 +30,13 @@ correctly returns the shortest string that contains both input strings as a subs
 *Note* to get efficiency-related points, you must include a brief discussion of the program's efficiency in your README
 '''
 #import numpy as np
-def shortest_string(string1, string2,substring):
-
-
-    return short
+def make_shortest_string(string1, string2,substring):
+    shortest_string = ""
+    if string1.endswith(substring):
+        shortest_string = string1+ string2.replace(substring,"")
+    else:
+        shortest_string = string2+ string1.replace(substring,"")
+    return shortest_string
 def intersection(string1, string2, len_string1, len_string2):
     #fill in everything with zeros
     matrix = [[0 for col in range(len_string1)] for row in range(len_string2)]
@@ -45,6 +48,8 @@ def intersection(string1, string2, len_string1, len_string2):
         for row in range (0,len_string2):
             if (string1[col] == string2[row]):
                 matrix[row][col] = 1
+    #for every cell in the matrix, add the value of the upper-reight cell to the current cell
+    #so the value of the cells will be the number of cosecutive match if there is any
     largest_count = 0
     index_of_largest = []
     for col in range (0,len_string1):
@@ -55,34 +60,19 @@ def intersection(string1, string2, len_string1, len_string2):
                     largest_count = matrix[row][col]
                     index_of_largest = [row,col]
 
-    help_print(matrix)
-
+    #construct the substring
     overlap = string1[index_of_largest[1]]
-
     for l in range(1, largest_count):
         overlap = string1[index_of_largest[1]-l]+overlap
     return overlap
 
 
 
-
-
-
-def help_see(matrix):
-    '''see how numbers are changed loop by loop through the matrix'''
-    for col in range (1,len_string1+1):
-        for row in range (1,len_string2+1):
-            matrix[row][col] = "-"
-            help_print(matrix)
-
-def help_print(matrix):
-    '''print the matrix is view-friendly way'''
-    for i in matrix:
-        print(i)
-
 def main():
     str_lst = ["A","C","T","G"]
     string1 = "AACCTGT"
     string2 = "CTGTACG"
-    string3 = intersection(string1,string2, len(string1), len(string2))
+    substring = intersection(string1,string2, len(string1), len(string2))
+    short = make_shortest_string(string1,string2, substring)
+    print(short)
 main()
