@@ -62,7 +62,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
     return overlap
 
 
-
 def main():
     gene_lst = ["A","C","T","G"]
     #test cases
