@@ -73,8 +73,11 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     keep_going = False
 
             if (keep_going):
-                large_share = matrix[i][len_string1-1]
-                large_share_pos = [i,len_string1-1]
+                if (large_share == matrix[i][len_string1-1]):
+                    large_share_pos.append([i,len_string1-1])
+                else:
+                    large_share = matrix[i][len_string1-1]
+                    large_share_pos = [i,len_string1-1]
 
 
 
@@ -87,8 +90,11 @@ def get_overlap(string1, string2, len_string1, len_string2):
                 if (matrix[current_pos[0]][ current_pos[1]] == 0):
                     keep_going = False
             if (keep_going):
-                large_share = matrix[len_string2-1][i]
-                large_share_pos = [len_string2-1, i]
+                if (large_share == matrix[len_string2-1][i]):
+                    large_share_pos.append([len_string2-1, i])
+                else:
+                    large_share = matrix[len_string2-1][i]
+                    large_share_pos = [len_string2-1, i]
 
 
     for item in matrix:
