@@ -140,7 +140,7 @@ def main():
 
 
 
-    check string inputs
+    #check string inputs
     string1 = input("Input the first sequence" + "\n").upper()
     for l in string1:
         if (l not in gene_list):
@@ -150,7 +150,7 @@ def main():
     for l in string2:
         if (l not in gene_list):
             raise ValueError('String2 is not a gene')
-    create substring by generating overlap with strings
+    #create substring by generating overlap with strings
     union_result = get_overlap(string1,string2, len(string1), len(string2))
 
     # print in desired format
