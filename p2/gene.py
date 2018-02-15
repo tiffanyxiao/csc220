@@ -28,6 +28,13 @@ def string_union(string1, string2,substring):
 def get_overlap(string1, string2, len_string1, len_string2):
     '''find the substring that appear in both strings'''
 
+
+    if (string1 in string2):
+        return string2
+
+    elif (string2 in string1):
+        return string1
+
     #string1 is associated with horizontal diraction
     #string2 is associated with vertical direction
     #everything initially filled in with 0's
@@ -60,7 +67,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
         if (large_share < matrix[i][len_string1-1]):
             current_pos = [i, len_string1-1]
             keep_going = True
-
             while (current_pos[0] != 0 and keep_going):
                 current_pos = [current_pos[0]-1, current_pos[1]-1]
                 if (matrix[current_pos[0]][ current_pos[1]] == 0):
@@ -88,11 +94,31 @@ def get_overlap(string1, string2, len_string1, len_string2):
     for item in matrix:
         print(item)
 
-    print("largest shared positon", large_share_pos)
-    print("largest sharted size", large_share)
+    print("large share position",large_share_pos)
+    print("largest shared",large_share)
+
+    keep_moving = True
 
 
 
+
+    if(large_share_pos):
+
+
+    if (large_share == 0):
+        return [string1 + string2, string2 + string1]
+    # if string is somewhere inbetween (either in front or in middle)
+    if (large_share_pos[1]+1 == len(string2)):
+        return[string1[:len_string1-1]+string2]
+    elif (large_share_pos[0]+1 == len(string1)):
+        return[string2[:len_string2-1]+string1]
+
+
+
+
+
+
+    '''dont really care abt stuff below this'''
 
     #construct the substring
     if (large_share_pos):
@@ -105,6 +131,11 @@ def get_overlap(string1, string2, len_string1, len_string2):
         overlap = ""
 
 
+
+
+
+
+
     return overlap
 
 
@@ -113,10 +144,8 @@ def get_overlap(string1, string2, len_string1, len_string2):
 def main():
     gene_lst = ["A","C","T","G"]
     #test cases
-
-
-    string1 = "AATCG"
-    string2 = "GTTCG"
+    string2 = "ACTG"
+    string1 = "TGAC"
     # string1 = input("Input the first sequence" + "\n")
     # for l in string1:
     #     if (l not in gene_lst):
