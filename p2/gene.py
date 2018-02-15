@@ -126,7 +126,8 @@ def get_overlap(string1, string2, len_string1, len_string2):
                 union.append(string1 + string2[share[1]-1:])
             elif (len_string1 > len_string2):
                 union.append(string2[:share[1]-1] + string1)
-
+            # elif (len_string1 == len_string2):
+            #     union.append(string1 + " " + string2)
 
 
     return union
@@ -140,8 +141,8 @@ def main():
     # list of all valid letters in gene sequence
     gene_list = ["A","C","T","G"]
 
-    string2 = "ACCTGT"
-    string1 = "CTGTACG"
+    string1 = "ACCTGT"
+    string2 = "CCTGTAG"
 
     # check string inputs
     # string1 = input("Input the first sequence" + "\n").upper()
