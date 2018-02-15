@@ -33,7 +33,8 @@ def get_overlap(string1, string2, len_string1, len_string2):
     #everything initially filled in with 0's
     matrix = [[0 for col in range(len_string1)] for row in range(len_string2)]
 
-    #fill in 1's with matches
+
+#fill in 1's with matches
     for col in range (0,len_string1):
         for row in range (0,len_string2):
             if (string1[col] == string2[row]):
@@ -51,32 +52,94 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     overlap_len = matrix[row][col]
                     overlap_position = [row,col]
 
+
+    large_share = 0
+    large_share_pos = []
+
+
+    for i in range(len(matrix)):
+        if (large_share < matrix[i][len_string1-1]):
+            large_share = matrix[i][len_string1-1]
+            large_share_pos = [i,len_string1-1]
+
+    for i in range(len(matrix[len_string2-1])):
+        if(large_share < matrix[len_string2-1][i]):
+            large_share = matrix[len_string2-1][i]
+            large_share_pos = [len_string2-1, i]
+
+
+
+
+
+
+    for item in matrix:
+        print(item)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     #construct the substring
     if (overlap_position):
         overlap = string1[overlap_position[1]]
         for l in range(1, overlap_len):
             overlap = string1[overlap_position[1]-l]+overlap
 
+
     else:
         overlap = ""
+
+    end_position = [overlap_position[0]-(overlap_len-1), overlap_position[1]-(overlap_len-1)]
+    print(end_position, "end position")
+
+
+    while(end_position[0] != -1):
+        print(string2[end_position[0]])
+        end_position[0] = end_position[0] - 1
+
+
+
+
     return overlap
+
+
 
 
 def main():
     gene_lst = ["A","C","T","G"]
     #test cases
-    # string1 = "CG"
-    # string2 = "AA"
+    # string2 = "CCATG"
+    # string1 = "ATG"
+    string1 = "BBBAAAAABBBB"
+    string2 = "CCAAAAACCBB"
 
-    string1 = input("Input the first sequence" + "\n")
-        for l in string1:
-            if (l not in gene_lst):
-                raise ValueError('String1 is not a gene')
-
-    string2 = input("Input the second sequence" + "\n")
-    for l in string2:
-        if (l not in gene_lst):
-            raise ValueError('String2 is not a gene')
+    # string1 = input("Input the first sequence" + "\n")
+    # for l in string1:
+    #     if (l not in gene_lst):
+    #         raise ValueError('String1 is not a gene')
+    #
+    # string2 = input("Input the second sequence" + "\n")
+    # for l in string2:
+    #     if (l not in gene_lst):
+    #         raise ValueError('String2 is not a gene')
 
     substring = get_overlap(string1,string2, len(string1), len(string2))
     print_union(string1,string2,string_union(string1,string2, substring))
