@@ -109,12 +109,7 @@ def get_overlap(string1, string2, len_string1, len_string2):
     # if the largest shared size == 0
     if (large_share == 0):
         return [string1 + string2, string2 + string1]
-    # if string is somewhere inbetween (either in front or in middle)
-    # if (large_share == 1):
-    #     if (large_share_pos[0][1]+2 == len(string2)):
-    #         union.append(string1[:len_string1-large_share]+string2)
-    #     elif (large_share_pos[0][0]+2 == len(string1)):
-    #         union.append(string2[:len_string2-large_share]+string1)
+
 
     for share in large_share_pos:
         if (share[0]+1 == len_string2):
@@ -124,8 +119,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
             union.append(string1 + string2[share[0]+1:])
 
 
-
-    print(large_share_pos)
 
     return union
 
