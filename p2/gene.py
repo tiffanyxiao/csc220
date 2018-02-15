@@ -60,50 +60,52 @@ def get_overlap(string1, string2, len_string1, len_string2):
     large_share = 0
     large_share_pos = []
 
-
-
     for i in range(len(matrix)):
         if (large_share < matrix[i][len_string1-1]):
+
             current_pos = [i, len_string1-1]
             keep_going = True
+
             while (current_pos[0] != 0 and keep_going):
-                 large_share = matrix[i][len_string1-1]
-                 large_share_pos = [i,len_string1-1]
+                current_pos = [current_pos[0]-1, current_pos[1]-1]
+                if (matrix[current_pos[0]][ current_pos[1]] == 0):
+                    keep_going = False
+
+            if (keep_going):
+                large_share = matrix[i][len_string1-1]
+                large_share_pos = [i,len_string1-1]
+
+
 
     for i in range(len(matrix[len_string2-1])):
         if(large_share < matrix[len_string2-1][i]):
-            large_share = matrix[len_string2-1][i]
-            large_share_pos = [len_string2-1, i]
+
+            current_pos = [len_string2-1,i]
+            keep_going = True
+
+            while(current_pos[1] != 0 and keep_going):
+                current_pos = [current_pos[0]-1, current_pos[1]-1]
+
+                if (matrix[current_pos[0]][ current_pos[1]] == 0):
+                    keep_going = False
+            if (keep_going):
+                large_share = matrix[len_string2-1][i]
+                large_share_pos = [len_string2-1, i]
 
 
-
-
-
-
-    for item in matrix:
-        print(item)
+    print(large_share_pos, "hey caren")
 
 
 
     #construct the substring
-    if (overlap_position):
-        overlap = string1[overlap_position[1]]
+    if (large_share_pos):
+        overlap = string1[large_share_pos[1]]
         for l in range(1, overlap_len):
-            overlap = string1[overlap_position[1]-l]+overlap
+            overlap = string1[large_share_pos[1]-l]+overlap
 
 
     else:
         overlap = ""
-
-    end_position = [overlap_position[0]-(overlap_len-1), overlap_position[1]-(overlap_len-1)]
-    print(end_position, "end position")
-
-
-    while(end_position[0] != -1):
-        print(string2[end_position[0]])
-        end_position[0] = end_position[0] - 1
-
-
 
 
     return overlap
@@ -117,8 +119,10 @@ def main():
     # string2 = "CCATG"
     # string1 = "ATG"
     string1 = "BBBAAAAABBBB"
-    string2 = "CCAAAAACCBB"
-
+    string2 = "CCAAAAACC"
+    #
+    # string1 = "AATCG"
+    # string2 = "GTTCG"
     # string1 = input("Input the first sequence" + "\n")
     # for l in string1:
     #     if (l not in gene_lst):
