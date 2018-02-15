@@ -7,23 +7,23 @@ Given two strings representing snippets of genes (letters ACGT), identify the
 shortest string that could contain them both as subsequences.
 '''
 
-def print_union(string1, string2, union_result):
-    '''print out the result in a pretty format'''
-    print("**************************************")
-    print("String 1 -", string1)
-    print("String 2 -", string2)
-    print("shortest string that has both as substring")
-    print(union_result, "(" + str(len(union_result)) + ")")
-    print("**************************************")
-
-def string_union(string1, string2,substring):
-    '''make the shortest string  that contains string1 and string2 as subsequences'''
-    union_result = ""
-    if string1.endswith(substring):
-        union_result = string1+ string2.replace(substring,"")
-    else:
-        union_result = string2+ string1.replace(substring,"")
-    return union_result
+# def print_union(string1, string2, union_result):
+#     '''print out the result in a pretty format'''
+#     print("**************************************")
+#     print("String 1 -", string1)
+#     print("String 2 -", string2)
+#     print("shortest string that has both as substring")
+#     print(union_result, "(" + str(len(union_result)) + ")")
+#     print("**************************************")
+#
+# def string_union(string1, string2,substring):
+#     '''make the shortest string  that contains string1 and string2 as subsequences'''
+#     union_result = ""
+#     if string1.endswith(substring):
+#         union_result = string1+ string2.replace(substring,"")
+#     else:
+#         union_result = string2+ string1.replace(substring,"")
+#     return union_result
 
 def get_overlap(string1, string2, len_string1, len_string2):
     '''find the substring that appear in both strings'''
@@ -102,7 +102,7 @@ def get_overlap(string1, string2, len_string1, len_string2):
 
 
 
-    if(large_share_pos):
+
 
 
     if (large_share == 0):
@@ -113,12 +113,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
     elif (large_share_pos[0]+1 == len(string1)):
         return[string2[:len_string2-1]+string1]
 
-
-
-
-
-
-    '''dont really care abt stuff below this'''
 
     #construct the substring
     if (large_share_pos):
@@ -157,6 +151,7 @@ def main():
     #         raise ValueError('String2 is not a gene')
 
     substring = get_overlap(string1,string2, len(string1), len(string2))
-    print_union(string1,string2,string_union(string1,string2, substring))
+    print(substring)
+    # print_union(string1,string2,string_union(string1,string2, substring))
 
 main()
