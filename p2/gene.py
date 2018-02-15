@@ -62,16 +62,19 @@ def get_overlap(string1, string2, len_string1, len_string2):
     large_share = 0
     large_share_pos = []
 
+    #find the largest shared position in bottom row
     for i in range(len(arrayValues)):
         if (large_share < arrayValues[i][len_string1-1]):
             current_pos = [i, len_string1-1]
             keep_going = True
 
+            #find if any zeros found while retracing
             while (current_pos[0] != 0 and keep_going):
                 current_pos = [current_pos[0]-1, current_pos[1]-1]
                 if (arrayValues[current_pos[0]][ current_pos[1]] == 0):
                     keep_going = False
 
+            #if no zeros found update the largest substring information
             if (keep_going):
                 if (large_share == arrayValues[i][len_string1-1]):
                     large_share_pos.append([i,len_string1-1])
@@ -79,16 +82,19 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     large_share = arrayValues[i][len_string1-1]
                     large_share_pos = [[i,len_string1-1]]
 
+    #find the largest shared position using the rightmost column
     for i in range(len(arrayValues[len_string2-1])):
         if(large_share <= arrayValues[len_string2-1][i]):
             current_pos = [len_string2-1,i]
             keep_going = True
+
+            #find it any zeros are encountered retracing
             while(current_pos[1] != 0 and keep_going):
                 current_pos = [current_pos[0]-1, current_pos[1]-1]
                 if (arrayValues[current_pos[0]][ current_pos[1]] == 0):
                     keep_going = False
 
-
+            #if no zeros found update the largest substring information
             if (keep_going):
                 if (large_share == arrayValues[len_string2-1][i]):
                     large_share_pos.append([len_string2-1, i])
@@ -96,11 +102,7 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     large_share = arrayValues[len_string2-1][i]
                     large_share_pos = [[len_string2-1, i]]
 
-    for item in arrayValues:
-        print(item)
 
-    print("largest shared positon", large_share_pos)
-    print("largest shared size", large_share)
 
     union = []
     #construct the substring
@@ -138,8 +140,9 @@ def main():
 
     # string1 = "ATTG"
     # string2= "TTA"
-    string2 = "AATCG"
-    string1 = "GTTCG"
+
+    string1 = "AAA"
+    string2 = "AAB"
 
 
     # check string inputs
