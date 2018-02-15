@@ -113,6 +113,8 @@ def get_overlap(string1, string2, len_string1, len_string2):
     elif (large_share_pos[0]+1 == len(string1)):
         return[string2[:len_string2-1]+string1]
 
+    return "" #in case no overlap??
+
 
 
 
