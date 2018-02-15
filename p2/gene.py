@@ -114,23 +114,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
         return[string2[:len_string2-1]+string1]
 
 
-    #construct the substring
-    if (large_share_pos):
-        overlap = string1[large_share_pos[1]]
-        for l in range(1, overlap_len):
-            overlap = string1[large_share_pos[1]-l]+overlap
-
-
-    else:
-        overlap = ""
-
-
-
-
-
-
-
-    return overlap
 
 
 
