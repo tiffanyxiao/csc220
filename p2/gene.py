@@ -97,12 +97,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
     print("large share position",large_share_pos)
     print("largest shared",large_share)
 
-    keep_moving = True
-
-
-
-
-
 
 
     if (large_share == 0):
