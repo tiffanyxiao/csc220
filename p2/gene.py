@@ -49,15 +49,15 @@ def get_overlap(string1, string2, len_string1, len_string2):
 
     #for every cell in the matrix, add the value of the upper-reight cell to the current cell
     #so the value of the cells will be the number of cosecutive match if there is any
-    overlap_len = 0
-    overlap_position = []
+    # overlap_len = 0
+    # overlap_position = []
     for col in range (0,len_string1):
         for row in range (0,len_string2):
             if matrix[row][col] == 1 and row!=0 and col!=0:
                 matrix[row][col] = matrix[row][col] + matrix[row-1][col-1]
-                if matrix[row][col]>overlap_len:
-                    overlap_len = matrix[row][col]
-                    overlap_position = [row,col]
+                # if matrix[row][col]>overlap_len:
+                #     overlap_len = matrix[row][col]
+                #     overlap_position = [row,col]
 
 
     large_share = 0
