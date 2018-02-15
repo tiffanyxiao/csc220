@@ -108,33 +108,22 @@ def get_overlap(string1, string2, len_string1, len_string2):
     if (large_share == 0):
         return [string1 + string2, string2 + string1]
     # if string is somewhere inbetween (either in front or in middle)
-    if (large_share == 1):
-        if (large_share_pos[0][1]+2 == len(string2)):
-            union.append(string1[:len_string1-large_share]+string2)
-        elif (large_share_pos[0][0]+2 == len(string1)):
-            union.append(string2[:len_string2-large_share]+string1)
-
+    # if (large_share == 1):
+    #     if (large_share_pos[0][1]+2 == len(string2)):
+    #         union.append(string1[:len_string1-large_share]+string2)
+    #     elif (large_share_pos[0][0]+2 == len(string1)):
+    #         union.append(string2[:len_string2-large_share]+string1)
 
     for share in large_share_pos:
         if (share[0]+1 == len_string2):
-            print(string2[:share[0]], string1[share[0]:], "weird")
-            #union.append(string1[:len_string1-large_share]+string2)
-            union.append(string2[:share[0]] + string1[share[0]:])
-
+            union.append(string2 + string1[share[1]+1:])
 
         elif (share[1]+1 == len_string1):
-            print(string1[:share[1]], string2[share[1]:])
-            union.append(string1[:share[1]] + string2[share[1]:])
-            #union.append(string2[:len_string2-large_share]+string1)
-        else:
-            if (len_string1 < len_string2):
-                print("hello")
-                union.append(string1 + string2[share[1]-1:])
-
-            elif (len_string1 > len_string2):
-                union.append(string2[:share[1]-1] + string1)
+            union.append(string1 + string2[share[0]+1:])
 
 
+
+    print(large_share_pos)
 
     return union
 
@@ -147,8 +136,10 @@ def main():
     # list of all valid letters in gene sequence
     gene_list = ["A","C","T","G"]
 
-    string2 = "ACCTGT"
-    string1= "CCTGTAG"
+    # string1 = "ATTG"
+    # string2= "TTA"
+    string2 = "CCTGTAG"
+    string1 = "ACCTGT"
 
 
     # check string inputs
