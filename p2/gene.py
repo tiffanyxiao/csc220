@@ -113,21 +113,27 @@ def get_overlap(string1, string2, len_string1, len_string2):
             union.append(string1[:len_string1-large_share]+string2)
         elif (large_share_pos[0][0]+2 == len(string1)):
             union.append(string2[:len_string2-large_share]+string1)
+
+
     for share in large_share_pos:
-        print("line 119")
-        if (share[1]+1 == len(string2)):
-            print("EITHER LINE 120")
-            union.append(string1[:len_string1-large_share]+string2)
-        elif (share[0]+1 == len(string1)):
-            print("OR LINE 123")
-            union.append(string2[:len_string2-large_share]+string1)
+        if (share[0]+1 == len_string2):
+            print(string2[:share[0]], string1[share[0]:], "weird")
+            #union.append(string1[:len_string1-large_share]+string2)
+            union.append(string2[:share[0]] + string1[share[0]:])
+
+
+        elif (share[1]+1 == len_string1):
+            print(string1[:share[1]], string2[share[1]:])
+            union.append(string1[:share[1]] + string2[share[1]:])
+            #union.append(string2[:len_string2-large_share]+string1)
         else:
             if (len_string1 < len_string2):
+                print("hello")
                 union.append(string1 + string2[share[1]-1:])
+
             elif (len_string1 > len_string2):
                 union.append(string2[:share[1]-1] + string1)
-            # elif (len_string1 == len_string2):
-            #     union.append(string1 + " " + string2)
+
 
 
     return union
@@ -141,8 +147,9 @@ def main():
     # list of all valid letters in gene sequence
     gene_list = ["A","C","T","G"]
 
-    string1 = "ACCTGT"
-    string2 = "CCTGTAG"
+    string2 = "ACCTGT"
+    string1= "CCTGTAG"
+
 
     # check string inputs
     # string1 = input("Input the first sequence" + "\n").upper()
