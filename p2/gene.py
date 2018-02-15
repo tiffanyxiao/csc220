@@ -138,8 +138,8 @@ def main():
 
     # string1 = "ATTG"
     # string2= "TTA"
-    string2 = "CCTGTAG"
-    string1 = "ACCTGT"
+    string2 = "AATCG"
+    string1 = "GTTCG"
 
 
     # check string inputs
