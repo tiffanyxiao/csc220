@@ -114,9 +114,7 @@ def main():
     gene_lst = ["A","C","T","G"]
     #test cases
 
-    # string1 = "BBBAAAAABBBB"
-    # string2 = "CCAAAAACC"
-    #
+
     string1 = "AATCG"
     string2 = "GTTCG"
     # string1 = input("Input the first sequence" + "\n")
