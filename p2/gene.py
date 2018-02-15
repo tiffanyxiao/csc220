@@ -138,24 +138,19 @@ def main():
     # list of all valid letters in gene sequence
     gene_list = ["A","C","T","G"]
 
-    # string1 = "ATTG"
-    # string2= "TTA"
-
-    string1 = "AAA"
-    string2 = "AAB"
 
 
-    # check string inputs
-    # string1 = input("Input the first sequence" + "\n").upper()
-    # for l in string1:
-    #     if (l not in gene_list):
-    #         raise ValueError('String1 is not a gene')
-    #
-    # string2 = input("Input the second sequence" + "\n").upper()
-    # for l in string2:
-    #     if (l not in gene_list):
-    #         raise ValueError('String2 is not a gene')
-    #create substring by generating overlap with strings
+    check string inputs
+    string1 = input("Input the first sequence" + "\n").upper()
+    for l in string1:
+        if (l not in gene_list):
+            raise ValueError('String1 is not a gene')
+
+    string2 = input("Input the second sequence" + "\n").upper()
+    for l in string2:
+        if (l not in gene_list):
+            raise ValueError('String2 is not a gene')
+    create substring by generating overlap with strings
     union_result = get_overlap(string1,string2, len(string1), len(string2))
 
     # print in desired format
