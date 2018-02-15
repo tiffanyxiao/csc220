@@ -53,14 +53,22 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     overlap_position = [row,col]
 
 
+
+
+
+    '''this is where i start to make the supersequence thing'''
     large_share = 0
     large_share_pos = []
 
 
+
     for i in range(len(matrix)):
         if (large_share < matrix[i][len_string1-1]):
-            large_share = matrix[i][len_string1-1]
-            large_share_pos = [i,len_string1-1]
+            current_pos = [i, len_string1-1]
+            keep_going = True
+            while (current_pos[0] != 0 and keep_going):
+                 large_share = matrix[i][len_string1-1]
+                 large_share_pos = [i,len_string1-1]
 
     for i in range(len(matrix[len_string2-1])):
         if(large_share < matrix[len_string2-1][i]):
@@ -74,26 +82,6 @@ def get_overlap(string1, string2, len_string1, len_string2):
 
     for item in matrix:
         print(item)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
