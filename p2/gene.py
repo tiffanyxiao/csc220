@@ -53,16 +53,11 @@ def get_overlap(string1, string2, len_string1, len_string2):
                     overlap_position = [row,col]
 
 
-
-
-
-    '''this is where i start to make the supersequence thing'''
     large_share = 0
     large_share_pos = []
 
     for i in range(len(matrix)):
         if (large_share < matrix[i][len_string1-1]):
-
             current_pos = [i, len_string1-1]
             keep_going = True
 
@@ -79,13 +74,10 @@ def get_overlap(string1, string2, len_string1, len_string2):
 
     for i in range(len(matrix[len_string2-1])):
         if(large_share < matrix[len_string2-1][i]):
-
             current_pos = [len_string2-1,i]
             keep_going = True
-
             while(current_pos[1] != 0 and keep_going):
                 current_pos = [current_pos[0]-1, current_pos[1]-1]
-
                 if (matrix[current_pos[0]][ current_pos[1]] == 0):
                     keep_going = False
             if (keep_going):
@@ -93,7 +85,12 @@ def get_overlap(string1, string2, len_string1, len_string2):
                 large_share_pos = [len_string2-1, i]
 
 
-    print(large_share_pos, "hey caren")
+    for item in matrix:
+        print(item)
+
+    print("largest shared positon", large_share_pos)
+    print("largest sharted size", large_share)
+
 
 
 
@@ -116,13 +113,12 @@ def get_overlap(string1, string2, len_string1, len_string2):
 def main():
     gene_lst = ["A","C","T","G"]
     #test cases
-    # string2 = "CCATG"
-    # string1 = "ATG"
-    string1 = "BBBAAAAABBBB"
-    string2 = "CCAAAAACC"
+
+    # string1 = "BBBAAAAABBBB"
+    # string2 = "CCAAAAACC"
     #
-    # string1 = "AATCG"
-    # string2 = "GTTCG"
+    string1 = "AATCG"
+    string2 = "GTTCG"
     # string1 = input("Input the first sequence" + "\n")
     # for l in string1:
     #     if (l not in gene_lst):
