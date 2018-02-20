@@ -12,6 +12,17 @@ def pantrySums(boxes, n_items, total):
     #get all the numbers in a where there is are items attached to the index
     pantry_vals = [i for i in range(len(pantry)) if (pantry[i]!=None)]
 
+    pantry_vals = []
+    for i in range(len(pantry)):
+        if (pantry[i] != None):
+            for box in pantry[i]:
+                pantry_vals.append(i)
+    print(pantry_vals)
+
+
+
+    #pantry_vals = [2,3,10,8,7]
+
 
     #want to include 0 in the table so we need total+1
     #[i][j] where i indicates row and j indicates column
@@ -54,8 +65,9 @@ def pantrySums(boxes, n_items, total):
     for item in arrayValues:
         print(item)
 
+
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "rain": 2}
     num_boxes = len(boxes)
     total = 11
     pantrySums(boxes, num_boxes, total)
