@@ -1,8 +1,7 @@
 
 def pantrySums(boxes, n_items, total):
 
-
-    #create a list of lists bc easier to reference and use than dictionary. index is weight
+    #create a list of lists, index is weight
     pantry = [None]*total
     for box in boxes:
         if (pantry[boxes.get(box)] == None):
@@ -14,7 +13,6 @@ def pantrySums(boxes, n_items, total):
     pantry_vals = [i for i in range(len(pantry)) if (pantry[i]!=None)]
 
 
-
     #want to include 0 in the table so we need total+1
     #[i][j] where i indicates row and j indicates column
     arrayValues = [["U" for col in range(total+1)] for row in range(len(pantry_vals))]
@@ -22,55 +20,39 @@ def pantrySums(boxes, n_items, total):
 
     #fill all the 0's with true because we know it's true
     for i in range(len(pantry_vals)):
-        arrayValues[i][0] = "T"
+        arrayValues[i][0] = True
 
     #fill the first row so that other rows can be filled systematically
     for i in range(1, total+1):
         if(pantry_vals[0] == i ):
-            arrayValues[0][i] = "T"
+            arrayValues[0][i] = True
         else:
-            arrayValues[0][i] = "F"
+            arrayValues[0][i] = False
 
     #now begin systematically filling in the array:
-
     for row in range (1,len(pantry_vals)):
         for col in range (1,total+1):
 
             if (col < pantry_vals[row]):
-                if (arrayValues[row-1][col] == "T"):
-                    arrayValues[row][col] = "T"
+                if (arrayValues[row-1][col] == True):
+                    arrayValues[row][col] = True
                 else:
-                    arrayValues[row][col] = "F"
-
+                    arrayValues[row][col] = False
 
             elif (col == pantry_vals[row]):
-                arrayValues[row][col] = "T"
+                arrayValues[row][col] = True
 
             elif (col > pantry_vals[row]):
                 #go up and back to the value to find it
 
-                if (arrayValues[row-1][col-pantry_vals[row]]== "T"):
-                    arrayValues[row][col] = "T"
+                if (arrayValues[row-1][col-pantry_vals[row]]== True):
+                    arrayValues[row][col] = True
                 else:
                     arrayValues[row][col] = arrayValues[row-1][col]
 
 
-
-
-
-
-
-
-
-
-
     for item in arrayValues:
         print(item)
-
-
-
-
-
 
 def main():
     boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10}
