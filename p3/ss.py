@@ -66,14 +66,13 @@ def pantrySums(boxes, n_items, total):
                 else:
                     arrayValues[row][col] = arrayValues[row-1][col]
 
-    for item in arrayValues:
-        print(item)
+    # for item in arrayValues:
+    #     print(item)
 
 
     #now retracing to get a subset
     if (arrayValues[len(pantry_vals)-1][total]):
         pointer = [len(pantry_vals)-1, total]
-
 
         while(pointer[1] > 0 or pointer[0] > 0):
             while(arrayValues[pointer[0]-1][pointer[1]] and pointer[0] >= 0):
@@ -84,19 +83,13 @@ def pantrySums(boxes, n_items, total):
 
 
 
-            # while(arrayValues[pointer[0]][pointer[1]]):
-            #     pointer = [pointer[0]-1, pointer[1]]
-            # result.append(pantry[pantry_vals[pointer[0]]])
-            # pointer = [pointer[0], pointer[1]-pantry_vals[pointer[0]]]
-
-
-
+    #print(values)
     return result
 
 
 
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "chuck":2}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "chuck":1}
     #doesnt work with chuck = 2 but with chuck = 3 it does
     num_boxes = len(boxes)
     total = 11
