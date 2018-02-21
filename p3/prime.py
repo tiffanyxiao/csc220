@@ -1,36 +1,36 @@
+import sys
 
-'''
-Given a dictionary of items and their (integer, positive-valued) item weights, identify
-whether or not there is a subset that could fill a Prime Pantry Box to exactly 100%% and
-report which items are in the subset
-Example function call:
-primePantryV2({“pepsi”:55,“detergent”:30, “chips”:25, “cereal”:15}, 4, 100)
-Desired output:
-[“pepsi”, “detergent”, “cereal”]
-You only need to return one correct match to get full credit. Bonus point if you can return all matches. Rubric forthcoming.
-Auther notes:
-To do:
-'''
-import multiprocessing as mp
+def primePantry(list_items, n_items, total) :
+    ''' Function identifies whether or not there is a subset that could fill a
+    Prime Pantry Box to exactly 100%
 
-def primePantry(boxes, n_items, total):
-    all_pantries = []
-    for box in boxes:
-        one_pantry = [box]
-        weight = boxes.get(box)
-        for otherbox in boxes:
-            if (weight + boxes.get(otherbox) <= total) and (otherbox not in one_pantry):
-                one_pantry.append(otherbox)
-                weight += boxes.get(otherbox)
-        if weight == 100:
-            return True
-    return False
+    list_items - list of all item weights (integer, positive valued)
+    n_items - number of items in list_items
+    total - total/sum requested (100 in this challenge)
+    '''
+    # create list of ints with list_items
+    list_items = [int(i) for i in range(len(list_items))]
 
-def main():
-    primeComplete = primePantry({ "chips":25, "detergent":30, "cereal":15,"pepsi":55}, 4, 100)
-    if primeComplete:
-        print("True")
-    else:
-        print("False")
+    # return True if there's an element equal to total
+    subset = [[True] * (total+1)] * (n_items+1)
 
-main()
+    # if the total is 0, return true
+    for i in range(0, n_items+1) :
+        subset[i][0] = True
+
+    # if the total is not 0 and there is nothing in the list, then its False
+    for i in range(1, total + 1) :
+        subset[0][i] = False
+
+    # create a 2D array, and fill it up from bottom up. The value of the element
+    # is true if there is a subset with total equal to i, or else it's false
+    for i in range(1, n_items+1) :
+        for j in range(1, total+1) :
+            if(j < list_items[i-1]) :
+                subset[i][j] = subset[i-1][j]
+            if (j >= list_items[i-1]) :
+                subset[i][j] = subset[i-1][j] or subset[i - 1][j-list_items[i-1]]
+
+    return subset[n_items][total]
+
+primePantry(sys.argv[1], int(sys.argv[2]), int(sys.argv[3]))
