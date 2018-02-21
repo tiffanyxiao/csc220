@@ -10,18 +10,12 @@ def pantrySums(boxes, n_items, total):
             pantry[boxes.get(box)].append(box)
 
     #get all the numbers in a where there is are items attached to the index
-    pantry_vals = [i for i in range(len(pantry)) if (pantry[i]!=None)]
-
     pantry_vals = []
     for i in range(len(pantry)):
         if (pantry[i] != None):
             for box in pantry[i]:
                 pantry_vals.append(i)
-    print(pantry_vals)
 
-
-
-    #pantry_vals = [2,3,10,8,7]
 
 
     #want to include 0 in the table so we need total+1
