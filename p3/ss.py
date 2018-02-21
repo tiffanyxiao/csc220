@@ -70,8 +70,6 @@ def pantrySums(boxes, n_items, total):
 
 
     #now retracing to get a subset
-
-    minisub = []
     if (arrayValues[len(pantry_vals)-1][total]):
         pointer = [len(pantry_vals)-1, total]
 
@@ -81,27 +79,13 @@ def pantrySums(boxes, n_items, total):
             while(arrayValues[pointer[0]-1][pointer[1]]):
                 pointer = [pointer[0]-1, pointer[1]]
 
-            minisub.append(pantry[pantry_vals[pointer[0]]])
+            result.append(pantry[pantry_vals[pointer[0]]])
 
             pointer = [pointer[0], pointer[1]-pantry_vals[pointer[0]]]
 
 
 
 
-    #     minisub.append(pantry[pointer[0]])
-    #
-    # print(minisub, "hello")
-    print(minisub)
-
-
-
-
-
-
-    # for item in arrayValues:
-    #     print(item)
-
-    print(result)
     return result
 
 
