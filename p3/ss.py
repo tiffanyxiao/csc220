@@ -4,10 +4,9 @@ COMBINATIONS if they add up to some number greater than the given total
 
 multiprocessing might be a good idea for working with multiple tables at a time?'''
 
-
+from itertools import combinations
 
 def pantrySums(boxes, n_items, total):
-
     result = []
 
     #create a list of lists, index is weight
@@ -21,7 +20,6 @@ def pantrySums(boxes, n_items, total):
         else:
             pantry[boxes.get(box)].append(box)
 
-    print(pantry)
 
     #get all the numbers in a where there is are items attached to the index
     pantry_vals = []
@@ -69,16 +67,14 @@ def pantrySums(boxes, n_items, total):
                     arrayValues[row][col] = arrayValues[row-1][col]
 
 
-
-
     #now retracing to get a subset
     if (arrayValues[len(pantry_vals)-1][total]):
         pointer = [len(pantry_vals)-1, total]
 
 
         while(pointer[1] != 0):
-
-            while(arrayValues[pointer[0]-1][pointer[1]]):
+            print(pointer)
+            while(arrayValues[pointer[0]][pointer[1]]):
                 pointer = [pointer[0]-1, pointer[1]]
 
             result.append(pantry[pantry_vals[pointer[0]]])
@@ -86,17 +82,18 @@ def pantrySums(boxes, n_items, total):
             pointer = [pointer[0], pointer[1]-pantry_vals[pointer[0]]]
 
 
-
-
     return result
 
 
 
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "chuck":3}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "chuck":2}
+    #doesnt work with chuck = 2 but with chuck = 3 it does
     num_boxes = len(boxes)
     total = 11
-    pantrySums(boxes, num_boxes, total)
+    fullbox = pantrySums(boxes, num_boxes, total)
+    print(fullbox)
+
 
 
 
