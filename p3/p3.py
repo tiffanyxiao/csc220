@@ -1,7 +1,10 @@
 '''problem is that it doesnt find all the possible combinations given that it
 increases in increment down the table. solution COULD BE THAT WE REDO THE FUNCTION FOR ALL
 COMBINATIONS if they add up to some number greater than the given total
-multiprocessing might be a good idea for working with multiple tables at a time?'''
+multiprocessing might be a good idea for working with multiple tables at a time?
+
+need to work on retracing but otherwise its okay!!
+'''
 
 from itertools import combinations
 
