@@ -1,3 +1,8 @@
+'''problem is that it doesnt find all the possible combinations given that it
+increases in increment down the table. solution COULD BE THAT WE REDO THE FUNCTION FOR ALL
+COMBINATIONS if they add up to some number greater than the given total'''
+
+
 
 def pantrySums(boxes, n_items, total):
 
@@ -13,6 +18,8 @@ def pantrySums(boxes, n_items, total):
             pantry[boxes.get(box)] = [box]
         else:
             pantry[boxes.get(box)].append(box)
+
+    print(pantry)
 
     #get all the numbers in a where there is are items attached to the index
     pantry_vals = []
@@ -60,17 +67,44 @@ def pantrySums(boxes, n_items, total):
                     arrayValues[row][col] = arrayValues[row-1][col]
 
 
-    for item in arrayValues:
-        print(item)
+
+
+    #now retracing to get a subset
+
+    keep_going = True
+    minisub = []
+    if (arrayValues[len(pantry_vals)-1][total]):
+        pointer = [len(pantry_vals)-1, total]
+
+        while(arrayValues[pointer[0]-1][pointer[1]]):
+            arrayValues[pointer[0]][pointer[1]] = "V"
+            pointer = [pointer[0]-1, pointer[1]]
+
+        #find the largest adder
+        minisub.append(pantry[pantry_vals[pointer[0]]])
+
+
+
+    #     minisub.append(pantry[pointer[0]])
+    #
+    # print(minisub, "hello")
+    print(pantry[8])
+
+
+
+
+
+
+    # for item in arrayValues:
+    #     print(item)
 
     print(result)
     return result
 
 
 
-
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "rain": 11}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10}
     num_boxes = len(boxes)
     total = 11
     pantrySums(boxes, num_boxes, total)
