@@ -71,24 +71,27 @@ def pantrySums(boxes, n_items, total):
 
     #now retracing to get a subset
 
-    keep_going = True
     minisub = []
     if (arrayValues[len(pantry_vals)-1][total]):
         pointer = [len(pantry_vals)-1, total]
 
-        while(arrayValues[pointer[0]-1][pointer[1]]):
-            arrayValues[pointer[0]][pointer[1]] = "V"
-            pointer = [pointer[0]-1, pointer[1]]
 
-        #find the largest adder
-        minisub.append(pantry[pantry_vals[pointer[0]]])
+        while(pointer[1] != 0):
+
+            while(arrayValues[pointer[0]-1][pointer[1]]):
+                pointer = [pointer[0]-1, pointer[1]]
+
+            minisub.append(pantry[pantry_vals[pointer[0]]])
+
+            pointer = [pointer[0], pointer[1]-pantry_vals[pointer[0]]]
+
 
 
 
     #     minisub.append(pantry[pointer[0]])
     #
     # print(minisub, "hello")
-    print(pantry[8])
+    print(minisub)
 
 
 
@@ -104,7 +107,7 @@ def pantrySums(boxes, n_items, total):
 
 
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "chuck":3}
     num_boxes = len(boxes)
     total = 11
     pantrySums(boxes, num_boxes, total)
