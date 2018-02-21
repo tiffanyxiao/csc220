@@ -1,10 +1,15 @@
 
 def pantrySums(boxes, n_items, total):
 
+    result = []
+
     #create a list of lists, index is weight
-    pantry = [None]*total
+    pantry = [None]*(total+1)
+
     for box in boxes:
-        if (pantry[boxes.get(box)] == None):
+        if (boxes.get(box) == total):
+            result.append([box]) #if its complete by itself leave alone
+        elif (pantry[boxes.get(box)] == None):
             pantry[boxes.get(box)] = [box]
         else:
             pantry[boxes.get(box)].append(box)
@@ -15,7 +20,6 @@ def pantrySums(boxes, n_items, total):
         if (pantry[i] != None):
             for box in pantry[i]:
                 pantry_vals.append(i)
-
 
 
     #want to include 0 in the table so we need total+1
@@ -59,9 +63,14 @@ def pantrySums(boxes, n_items, total):
     for item in arrayValues:
         print(item)
 
+    print(result)
+    return result
+
+
+
 
 def main():
-    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "rain": 2}
+    boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10, "rain": 11}
     num_boxes = len(boxes)
     total = 11
     pantrySums(boxes, num_boxes, total)
