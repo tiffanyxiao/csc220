@@ -1,5 +1,6 @@
 '''
 Author: Tiffany Xiao
+Collaborator: Karen Santamaria
 Date: February 18, 2018
 Objective of challenge:
 Given a dictionary of items and their (integer, positive-valued) item weights, identify
@@ -9,53 +10,45 @@ Example function call:
 primePantryV2({“pepsi”:55,“detergent”:30, “chips”:25, “cereal”:15}, 4, 100)
 Desired output:
 [“pepsi”, “detergent”, “cereal”]
-You only need to return one correct match to get full credit. Bonus point if you can return all matches. Rubric forthcoming.
-Auther notes:
-To do:
 '''
+
 import sys
 import ast
 
-
 def prime_pantry(dictItems, nItems, total) :
     ''' Function identifies whether or not there is a subset that could fill a
-    Prime Pantry Box to exactly 100%
-    dictItems - list of all item weights (integer, positive valued)
+    Prime Pantry Box to exactly 100%, or the closest-without-going-over total
+    Parameters:
+    dictItems - dictionary of all items and their weights
     nItems - number of items in dictItems
     total - total/sum requested (100 in this challenge)
     '''
+     # number of items and total to add must be >0
+    if not(nItems > 0)  or not(total > 0):
+        raise Exception("Number of items and total must be greater than 0.")
 
-    # number of items and total to add must be >0
-    if not(nItems > 0  or total > 0):
-        raise Exception("'nItems' and 'total' must be greater than 0")
-
-
-    # check for some cases in which we do not need to run the entire function
-    if total < 0 or total > sum(dictItems.values()):
-        print("False")
-        sys.exit()
-
-    # convert dictionary into list of lists for easier iterating through them
+    # convert dictionary into list of lists to easily iterate through
     dictList = []
     for key, value in dictItems.items():
         temp = [key,value]
-
-        if(temp[1] <= 0):
+        # check if key and value of dictionary is valid
+        if(not isinstance(key, str)):
+            raise Exception('All item names must be strings.')
+        if(not isinstance(value, int)):
+            raise Exception('All item weights must be integers.')
+        if(value <= 0):
             #all weights must be >0
-            raise Exception("Weight of", temp[0],"is less than or equal to 0")
+            raise Exception('Weight of one of the items is less than or equal to 0.')
         dictList.append(temp)
 
-    # create boolean array to fill the array with all the sub-totals from the subsets
-    # initialize all subsets to false
-    # note: sub-totals will be true when they have reached the total value
-    subset = []
-    for i in range(total+1):
-        sub_subset = [False,[]]
-        subset.append(sub_subset)
+    # create 2-d array to fill the array with all the sub-totals from the subsets
+    # and the subset that creates the sub-total
+    # initialize all subsets to a list with false and an empty list
+    allSubset = [[False, []] for i in range(total+1)]
 
-    # set totals at index 0 to true
-    subset[0][0] = True
-    subset[0][1].append(0)
+    # set total at index 0 to true, and append 0 the subset
+    allSubset[0][0] = True
+    allSubset[0][1].append(0)
 
     # address base case (there's only one element, and the element is equivalent to total)
     if (nItems == 1 and dictList[0][1] == total) or total in dictList:
@@ -66,44 +59,55 @@ def prime_pantry(dictItems, nItems, total) :
     # we find a sum for x (or reach the end of the list of items)
     iterator = 0
     # continue to fill while we have not reached end of subset and iterator is not at end
-    while not subset[total][0] and iterator < len( dictList ):
+    while not allSubset[total][0] and iterator < len( dictList ):
         currentItem = dictList[iterator][1]
         currentPos = total
         # try to find a subset for the currentPos
-        while not subset[total][0] and currentPos >= currentItem:
-            if not subset[currentPos][0] and subset[currentPos - currentItem][0]:
-                subset[currentPos][1].append(currentPos-(currentPos - currentItem))
-                subset[currentPos][1].extend(subset[currentPos-currentItem][1])
-                subset[currentPos][0] = True
+        while not allSubset[total][0] and currentPos >= currentItem:
+            if not allSubset[currentPos][0] and allSubset[currentPos - currentItem][0]:
+                # append subset components to list
+                allSubset[currentPos][1].append(currentPos-(currentPos - currentItem))
+                allSubset[currentPos][1].extend(allSubset[currentPos-currentItem][1])
+                allSubset[currentPos][0] = True
             currentPos -= 1
         iterator += 1
 
-    # print result
+    # print in desired output format
+    # initialize list that contains all items that make up the allSubset
     allItems = []
-    if (subset[total][0]):
-        position = total
+    # keep track of the "largest" total (either total or the without-going-over solution)
+    largest = 0
+    if (allSubset[total][0]):
+        largest = total
     else:
         print("There are no items that perfectly add up to", total)
         # find closest number that is true
-        position = 0
-        for i in range(len(subset)-1,0,-1):
-            if subset[i][0]:
-                position = i
+        for i in range(len(allSubset)-1,0,-1):
+            if allSubset[i][0]:
+                largest = i
                 break
-        print("The closest-without-going-over solution is: total =", position)
+        if (largest != 0):
+            print("The closest-without-going-over solution is: total =", largest)
+        else:
+            print("Unfortunately, there are no items for you ...")
+            return
     numItems = 0
     for key, value in dictItems.items():
-        if value in subset[position][1]:
+        if value in allSubset[largest][1]:
             numItems += 1
-            if numItems == len(subset[position][1]):
+            if numItems == len(allSubset[largest][1]):
                 break
             allItems.append(key)
-    if allItems:
-        print(allItems)
-    else:
-        print("Unfortunately, there are no items for you ...")
+    print("Number of Items: ", len(allItems))
+    print(allItems)
 
     return
+def main():
+    boxes = {'11863': 11863, '16425': 16425, '2752': 2752, '14647': 14647, '5443': 5443}
+    num_boxes = len(boxes)
 
 
-prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+    prime_pantry(boxes, num_boxes, 2324500)
+
+main()
+#prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
