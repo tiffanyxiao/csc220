@@ -28,20 +28,10 @@ def prime_pantry(dictItems, nItems, total) :
     total - total/sum requested (100 in this challenge)
     '''
 
-
-    if  (type(nItems) != int):
-        print("what are u oding here***************")
-        sys.exit()
-
-
-    if not(type(dictItems) == dict or type(nItems) == int or type(total)):
-        raise Exception("Invalid type used in argument")
-
-    if not(nItems > 0  or total > 0):
+    # number of items and total to add must be >0
+    if (nItems > 0  or total > 0):
         raise Exception("'nItems' and 'total' must be greater than 0")
 
-    if not (bool(dictItems)):
-        raise Exception("Empty dictionary")
 
     # check for some cases in which we do not need to run the entire function
     if total < 0 or total > sum(dictItems.values()):
@@ -54,6 +44,7 @@ def prime_pantry(dictItems, nItems, total) :
         temp = [key,value]
 
         if(temp[1] <= 0):
+            #all weights must be >0
             raise Exception("Weight of", temp[0],"is less than or equal to 0")
         dictList.append(temp)
 
@@ -117,12 +108,5 @@ def prime_pantry(dictItems, nItems, total) :
 
     return
 
-def main():
-    #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
-    boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15, "cake":200}
-    num_boxes = len(boxes)
-    total = []
-    prime_pantry(boxes, num_boxes, total)
 
-main()
-#prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
