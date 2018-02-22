@@ -15,7 +15,7 @@ def pantrySums(boxes, n_items, total):
 
     for box in boxes:
         if (boxes.get(box) == total):
-            print("done")
+            print("only this box needed:", box)
             return
              #if its complete by itself leave alone
         elif (boxes.get(box) < total and pantry[boxes.get(box)] == None):
@@ -111,7 +111,7 @@ def pantrySums(boxes, n_items, total):
 
 def main():
     #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
-    boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15}
+    boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15, "cake":15}
     num_boxes = len(boxes)
 
     for i in range(25, 126):
