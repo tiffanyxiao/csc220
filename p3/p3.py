@@ -17,9 +17,9 @@ def pantrySums(boxes, n_items, total):
     for box in boxes:
         if (boxes.get(box) == total):
             result.append(["---"]) #if its complete by itself leave alone
-        elif (pantry[boxes.get(box)] == None):
+        elif (boxes.get(box) < total and pantry[boxes.get(box)] == None):
             pantry[boxes.get(box)] = [box]
-        else:
+        elif(boxes.get(box) < total and pantry[boxes.get(box)] != None):
             pantry[boxes.get(box)].append(box)
 
 
@@ -62,39 +62,63 @@ def pantrySums(boxes, n_items, total):
             elif (pantry_vals[row] == col):
                 arrayValues[row][col] = True
 
+    #print out table
+    # for i in range(total+1):
+    #     print(str(i)[-1],"", end = '')
 
-
-    # pointer = [len(pantry_vals)-1, total]
-    #
-    #
-    # #now retracing to get a subset
-    # if (arrayValues[len(pantry_vals)-1][total]):
-    #     pointer = [len(pantry_vals)-1, total]
-    #
-    #     while(pointer[1] >= 0 and pointer[0] >= 0):
-    #
-    #         kp = pointer[0]-1
-    #         print(pantry_vals[kp], kp)
-    #
-    #         print(pointer)
-    #         while (arrayValues[pointer[0]][pointer[1]] == True):
-    #             pointer=[pointer[0]-1, pointer[1]]
-    #         pointer = [pointer[0],pointer[1]-pantry_vals[kp]]
+    # print()
+    # for item in arrayValues:
+    #     for i in item:
+    #         if (i):
+    #             print("T ", end= '')
+    #         else:
+    #             print("F ", end = '')
+    #     print()
 
 
 
+    pointer = [len(pantry_vals)-1, total]
+
+    if not (arrayValues[pointer[0]][pointer[1]]):
+        print("NO VALUE HERE")
+        while(arrayValues[pointer[0]][pointer[1]] == False and pointer[1] > 0):
+            pointer[1] = pointer[1]-1
+        print("closest value is ", pointer[1])
+        return False
+
+    while(pointer[1] != 0):
+        while(pointer[0] > 0 and arrayValues[pointer[0]][pointer[1]]):
+            pointer[0] = pointer[0]-1
+
+
+        if (pointer[0] == 0):
+            if (pointer[1] not in pantry_vals):
+                result.append(pantry_vals[pointer[0]+1])
+                result.append(pantry_vals[pointer[0]])
+            else:
+                result.append(pointer[1])
+
+            break;
+
+        valbfor = pointer[0]+1
+        result.append(pantry_vals[valbfor])
+        pointer[1]=pointer[1]-pantry_vals[valbfor]
 
 
 
+    # for i in arrayValues:
+    #     print(i[40])
+    print(result, "this is result", sum(result))
     return arrayValues[len(pantry_vals)-1][total]
+
     #return result
 
 def main():
-    #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":10}
+    #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
     boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15}
     num_boxes = len(boxes)
-    total = 100
+    total = 80
     fullbox = pantrySums(boxes, num_boxes, total)
-    print(fullbox, "fullbox")
+    #print(fullbox, "fullbox")
 
 main()
