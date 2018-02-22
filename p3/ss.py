@@ -1,83 +1,128 @@
+'''problem is that it doesnt find all the possible combinations given that it
+increases in increment down the table. solution COULD BE THAT WE REDO THE FUNCTION FOR ALL
+COMBINATIONS if they add up to some number greater than the given total
+multiprocessing might be a good idea for working with multiple tables at a time?
+need to work on retracing but otherwise its okay!!
 '''
-Author: Tiffany Xiao
-Date: February 18, 2018
-Objective of challenge:
-Given a dictionary of items and their (integer, positive-valued) item weights, identify
-whether or not there is a subset that could fill a Prime Pantry Box to exactly 100%% and
-report which items are in the subset
-Example function call:
-primePantryV2({“pepsi”:55,“detergent”:30, “chips”:25, “cereal”:15}, 4, 100)
-Desired output:
-[“pepsi”, “detergent”, “cereal”]
-You only need to return one correct match to get full credit. Bonus point if you can return all matches. Rubric forthcoming.
-Auther notes:
-To do:
-'''
-import sys
-import ast
 
-def prime_pantry(dictItems, nItems, total) :
-    ''' Function identifies whether or not there is a subset that could fill a
-    Prime Pantry Box to exactly 100%
-    dictItems - list of all item weights (integer, positive valued)
-    nItems - number of items in dictItems
-    total - total/sum requested (100 in this challenge)
-    '''
-    # check for some cases in which we do not need to run the entire function
-    if total < 0 or total > sum(dictItems.values()):
-        print("False")
-        sys.exit()
 
-    # convert dictionary into list of lists for easier iterating through them
-    dictList = []
-    for key, value in dictItems.items():
-        temp = [key,value]
-        dictList.append(temp)
+def prime_pantry(boxes, n_items, total):
+    result = []
 
-    # create boolean array to fill the array with all the sub-totals from the subsets
-    # initialize all subsets to false
-    # note: sub-totals will be true when they have reached the total value
-    subset = []
-    for i in range(total+1):
-        sub_subset = [False,[]]
-        subset.append(sub_subset)
+    #create a list of lists, index is weight
+    pantry = [None]*(total+1)
 
-    # set totals at index 0 to true
-    subset[0][0] = True
-    print(subset)
+    for box in boxes:
+        if (boxes.get(box) == total):
+            print("only this box needed:", box)
+            return
+             #if its complete by itself leave alone
+        elif (boxes.get(box) < total and pantry[boxes.get(box)] == None):
+            pantry[boxes.get(box)] = [box]
+        elif(boxes.get(box) < total and pantry[boxes.get(box)] != None):
+            pantry[boxes.get(box)].append(box)
 
-    # address base case (there's only one element, and the element is equivalent to total)
-    if (nItems == 1 and dictList[0][1] == total) or total in dictList:
-        print("True")
-        sys.exit()
 
-    # list all the sums between 0 and total, and try to find a subset for each sum until
-    # we find a sum for x (or reach the end of the list of items)
-    iterator = 0
-    # continue to fill while we have not reached end of subset and iterator is not at end
-    while not subset[total][0] and iterator < len( dictList ):
-        currentItem = dictList[iterator][1]
-        currentPos = total
-        # try to find a subset for the currentPos
-        while not subset[total][0] and currentPos >= currentItem:
-            if not subset[currentPos][0] and subset[currentPos - currentItem][0]:
-                subset[currentPos][1].append(currentPos)
-                subset[currentPos][1].append(currentPos-currentItem)
-                subset[currentPos][0] = True
-            currentPos -= 1
-        print(subset[currentPos+1][1])
-        iterator += 1
-        print(subset)
+    #get all the numbers in a where there is are items attached to the index
+    pantry_vals = []
+    for i in range(len(pantry)):
+        if (pantry[i] != None):
+            for box in pantry[i]:
+                pantry_vals.append(i)
 
-    # print result
-    print(subset[total][0])
-    sys.exit()
 
-#prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
+    #want to include 0 in the table so we need total+1
+    #[i][j] where i indicates row and j indicates column
+    arrayValues = [["---" for col in range(total+1)] for row in range(len(pantry_vals))]
 
-def main():
-    boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15}
-    num_boxes = len(boxes)
-    total = 125
-    fullbox = prime_pantry(boxes, num_boxes, total)
-main()
+
+    #fill all the 0's with true because we know it's true
+    for i in range(len(pantry_vals)):
+        arrayValues[i][0] = True
+
+    #fill the first row so that other rows can be filled systematically
+    for i in range(1, total+1):
+        if(pantry_vals[0] == i):
+            arrayValues[0][i] = True
+        else:
+            arrayValues[0][i] = False
+
+    #now begin systematically filling in the array:
+    for row in range (1,len(pantry_vals)):
+        for col in range (1, total+1):
+            if (pantry_vals[row] > col ):
+                arrayValues[row][col] = arrayValues[row-1][col]
+
+            elif (pantry_vals[row] < col):
+                if (arrayValues[row-1][col]):
+                    arrayValues[row][col] = arrayValues[row-1][col]
+                else:
+                    arrayValues[row][col] = arrayValues[row-1][col-pantry_vals[row]]
+
+            elif (pantry_vals[row] == col):
+                arrayValues[row][col] = True
+
+    #print out table
+    # for i in range(total+1):
+    #     print(str(i)[-1],"", end = '')
+
+    # print()
+    # for item in arrayValues:
+    #     for i in item:
+    #         if (i):
+    #             print("T ", end= '')
+    #         else:
+    #             print("F ", end = '')
+    #     print()
+
+
+
+    pointer = [len(pantry_vals)-1, total]
+
+    if not (arrayValues[pointer[0]][pointer[1]]):
+        while(arrayValues[pointer[0]][pointer[1]] == False and pointer[1] > 0):
+            pointer[1] = pointer[1]-1
+        print("closest value is ", pointer[1])
+        return False
+
+    while(pointer[1] != 0):
+        while(pointer[0] > 0 and arrayValues[pointer[0]][pointer[1]]):
+            pointer[0] = pointer[0]-1
+
+        #in the cases where reach top without going left theres two situations
+        if (pointer[0] == 0):
+            if (pointer[1] not in pantry_vals):
+                result.append(pantry_vals[pointer[0]+1])
+                result.append(pantry_vals[pointer[0]])
+            else:
+                result.append(pointer[1])
+
+            break;
+
+        valbfor = pointer[0]+1
+        result.append(pantry_vals[valbfor])
+        pointer[1]=pointer[1]-pantry_vals[valbfor]
+
+    listbox = []
+    for item in result:
+        listbox.append(pantry[item])
+    print()
+    print("values:", result, "sum result: ",sum(result),"desired total: ", total)
+    print("boxes:", listbox)
+    print()
+
+    return arrayValues[len(pantry_vals)-1][total]
+
+    #return result
+
+# def main():
+#     #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
+#     boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15, "cake":15}
+#     num_boxes = len(boxes)
+#
+#     for i in range(25, 126):
+#         prime_pantry(boxes, num_boxes, i)
+#
+# main()
+
+prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
