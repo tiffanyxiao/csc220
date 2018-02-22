@@ -16,9 +16,6 @@ To do:
 import sys
 import ast
 
-'''I would say first check to make sure the three parameters are of the right type:
- a dict, followed by two ints. Then check to make sure the dictionary isn't empty,
- and that the values are integers (if those things matter to your solution).'''
 
 def prime_pantry(dictItems, nItems, total) :
     ''' Function identifies whether or not there is a subset that could fill a
