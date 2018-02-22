@@ -7,7 +7,7 @@ need to work on retracing but otherwise its okay!!
 '''
 
 
-def pantrySums(boxes, n_items, total):
+def prime_pantry(boxes, n_items, total):
     result = []
 
     #create a list of lists, index is weight
@@ -43,7 +43,7 @@ def pantrySums(boxes, n_items, total):
 
     #fill the first row so that other rows can be filled systematically
     for i in range(1, total+1):
-        if(pantry_vals[0] == i ):
+        if(pantry_vals[0] == i):
             arrayValues[0][i] = True
         else:
             arrayValues[0][i] = False
@@ -109,12 +109,13 @@ def pantrySums(boxes, n_items, total):
 
     #return result
 
-def main():
-    #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
-    boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15, "cake":15}
-    num_boxes = len(boxes)
-
-    for i in range(25, 126):
-        pantrySums(boxes, num_boxes, i)
-
-main()
+# def main():
+#     #boxes = { "chips":2, "detergent":3, "cereal":7,"pepsi":8, "chaps":2}
+#     boxes = {"pepsi":55, "chips":25, "detergent":30, "cereal":15, "cake":15}
+#     num_boxes = len(boxes)
+#
+#     for i in range(25, 126):
+#         pantrySums(boxes, num_boxes, i)
+#
+# main()
+prime_pantry(ast.literal_eval(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]))
