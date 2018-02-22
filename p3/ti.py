@@ -29,7 +29,7 @@ def prime_pantry(dictItems, nItems, total) :
     '''
 
     # number of items and total to add must be >0
-    if (nItems > 0  or total > 0):
+    if not(nItems > 0  or total > 0):
         raise Exception("'nItems' and 'total' must be greater than 0")
 
 
