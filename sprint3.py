@@ -1,28 +1,37 @@
+def wrap(pre, post):
 
-'''
-Objective: write a program that reads all the python files in a specified directory
-and prints out the number of lines of code in each (ignoring whitespace and
-comments)
-'''
-import glob, os
+    def decorate(func):
 
-import collections
+        def call(*args, **kwargs):
+            pre(func, *args, **kwargs)
+            result = func(*args, **kwargs)
+            post(func, *args, **kwargs)
+            print(args)
+            return result
 
-list0 = []
+        print(call)
+        return call
 
-path = "/Users/karensantamaria/Documents/School Past/Spring 17/CSC 111/All Graphics/*.py"
-for filename in glob.glob(path):
-	with open(filename, 'r') as f:
-		mytest = [x for x in f if( (x.strip()) and (not x.strip().startswith("#"))) ]
-
-
-
-		print(len(list0))
+    print(decorate)
+    return decorate
 
 
+def trace_in(func, *args, **kwargs):
+   print("Entering function",  func.__name__)
 
+def trace_out(func, *args, **kwargs):
+   print("Leaving function", func.__name__)
 
+@wrap(trace_in, trace_out)
+def calc(x, y):
+   return calc2(x+y)
 
+@wrap(trace_in, trace_out)
+def calc2(z):
+	return 2*z
 
+def main():
+	
+	print(calc(1,4))
 
-    
+main()

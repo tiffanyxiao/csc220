@@ -1,37 +1,26 @@
-def wrap(pre, post):
+#sprint 5
 
-    def decorate(func):
+def dp_change(coin_values, change, known_results):
 
-        def call(*args, **kwargs):
-            pre(func, *args, **kwargs)
-            result = func(*args, **kwargs)
-            post(func, *args, **kwargs)
-            print(args)
-            return result
-
-        print(call)
-        return call
-
-    print(decorate)
-    return decorate
+    for cents in range(change+1):
 
 
-def trace_in(func, *args, **kwargs):
-   print("Entering function",  func.__name__)
+        coin_count = cents
 
-def trace_out(func, *args, **kwargs):
-   print("Leaving function", func.__name__)
+        for j in [c for c in coin_values if c <= cents]:
 
-@wrap(trace_in, trace_out)
-def calc(x, y):
-   return calc2(x+y)
+            print(known_results)
+            if known_results[cents-j] + 1 < coin_count:
+                coin_count = known_results[cents-j]+1
 
-@wrap(trace_in, trace_out)
-def calc2(z):
-	return 2*z
+            known_results[cents] = coin_count
+
+    return known_results[change]
+
 
 def main():
-	
-	print(calc(1,4))
-
+    coin_values = [1, 2, 3]
+    known_results = []
+    change = 21
+    dp_change(coin_values, change, known_results)
 main()

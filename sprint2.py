@@ -1,52 +1,28 @@
 
-import re
-##test out 
+'''
+Objective: write a program that reads all the python files in a specified directory
+and prints out the number of lines of code in each (ignoring whitespace and
+comments)
+'''
+import glob, os
 
-class Contact:
-	def __init__(self, name, phone, email):
-		self.name = name
-		self.phone = phone
-		self.email = email
+import collections
 
-		self.email_check()
-		self.phone_check()
+list0 = []
 
-
-
-	def email_check(self):
-		if "@" not in self.email or ".com" not in self.email :
-			print("invalid email")
-
-	def phone_check(self):
-
-		no_char = re.sub('[^0-9]','', self.phone)
-
-
-		
-		if len(no_char) > 10:
-			print("invalid phone number", no_char)
-
-	def change_phone(self, new_phone):
-		self.phone = new_phone
-
-	def change_email(self, new_email):
-		self.email = new_email
+path = "/Users/karensantamaria/Documents/School Past/Spring 17/CSC 111/All Graphics/*.py"
+for filename in glob.glob(path):
+	with open(filename, 'r') as f:
+		mytest = [x for x in f if( (x.strip()) and (not x.strip().startswith("#"))) ]
 
 
 
-	def __str__(self):
-		all_info = (self.name) + " " +  (self.phone) + " " + (self.email)
-		return all_info
+		print(len(list0))
 
 
-	
-def main():
 
-	my_info = Contact("Karen", "845-326-6255", "sanmakaren@gmail.com");
-	print(my_info)
-	my_info.change_phone("6345346")
-	print(my_info)
-	
-	
 
-main()
+
+
+
+    

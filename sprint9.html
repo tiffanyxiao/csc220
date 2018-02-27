@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <style>
+    div{
+      float: none;
+      width: 40%;
+    }
+  </style>
+  <head>
+    <center>
+        <h1> Karen's Favorites </h1>
+        <div>
+          <h1 id = "song1"> Song #1: </h1>
+          <h3 id = "song1Album"> Album Name </h3>
+          <h2 id = "song1Artist"> Artist Name </h2>
+          <h3 id = "song1Date"> Release Date </h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/u-SU9-78i2g?rel=0&amp;showinfo=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div>
+          <h1 id = "song2"> Song #2: </h1>
+          <h3 id = "song2Album"> Album Name </h3>
+          <h2 id = "song2Artist"> Artist Name </h2>
+          <h3 id = "song2Date"> Release Date </h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/tKjkxl6un3U?rel=0&amp;showinfo=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div>
+          <h1 id = "song3"> Song #3: </h1>
+          <h3 id = "song3Album"> Album Name </h3>
+          <h2 id = "song3Artist"> Artist Name </h2>
+          <h3 id = "song3Date"> Release Date </h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/m39A5_P5YG0?rel=0&amp;showinfo=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div>
+          <h1 id = "song4"> Song #4: </h1>
+          <h3 id = "song4Album"> Album Name </h3>
+          <h2 id = "song4Artist"> Artist Name </h2>
+          <h3 id = "song4Date"> Release Date </h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/KbPWi1gshzI?rel=0&amp;showinfo=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div>
+          <h1 id = "song5"> Song #5: </h1>
+          <h3 id = "song5Album"> Album Name </h3>
+          <h2 id = "song5Artist"> Artist Name </h2>
+          <h3 id = "song5Date"> Release Date </h3>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/8jLPyacMHyI?rel=0&amp;showinfo=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        </div>
+      </div>
+        <p> HTML format taken from Tiffany Xiao https://github.com/tiffanyxiao/csc220-codingchallenges/blob/master/codingSprint9.html </p>
+    </center>
+  </head>
+<body>
+  <script>
+
+   // <p id="songs"></p>
+
+  "use strict"; // enable modern JS features
+
+  function Song(name, artist, album, release_date, video){
+    this.name = name;
+    this.artist = artist;
+    this.album = album;
+    this.release_date = release_date;
+    this.video=video
+
+
+  }
+
+
+    let s1 = new Song("Landfill", "Daughter", "His Young Heart", "2011","https://www.youtube.com/embed/Igx2X1Xrd4s?rel=0&amp;showinfo=0");
+    let s2 = new Song("Leaving The City", "Joanna Newsom", "Divers", "2015", "https://www.youtube.com/embed/tKjkxl6un3U?rel=0&amp;showinfo=0");
+    let s3 = new Song("Ua", "Soley", "Endless Summer", "2017", "https://www.youtube.com/embed/m39A5_P5YG0?rel=0&amp;showinfo=0");
+    let s4 = new Song("Hoppipolla", "Sigur Ros", "Takk...", "2005","https://www.youtube.com/embed/KbPWi1gshzI?rel=0&amp;showinfo=0" );
+    let s5 = new Song("What's That Perfume You Wear?", "Jens Lekman", "Life Will See You Now", '2017',"https://www.youtube.com/embed/8jLPyacMHyI?rel=0&amp;showinfo=0");
+
+
+    let sl = [s1, s2, s3, s4, s5];
+
+
+    for(let i = 0; i <= 4; i++){
+      let elementName = "song"+(i+1).toString();
+      document.getElementById(elementName).innerHTML =  sl[i].name;
+      document.getElementById(elementName+"Album").innerHTML =  sl[i].album;
+      document.getElementById(elementName+"Artist").innerHTML =  sl[i].artist;
+      document.getElementById(elementName+"Date").innerHTML =  sl[i].release_date;
+
+    }
+
+
+
+  </script>
+ </body>
+</html>
