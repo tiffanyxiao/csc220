@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>CSC220 Paddleball</title>
+    <h1>CSC220 Paddleball</h1>
+
+    <style>
+		canvas { background: #fff; }
+	</style>
+  </head>
+  <body>
+
+	<canvas id="myCanvas" width="480" height="320"></canvas>
+
+	<script src = "paddleball.js"></script>
+
+	<script>
+
+		/* -----------------------------------------------------
+		   Event listeners for keypress events; you'll implement
+		   the two HANDLERS (keyDownHandler and keyUpHandler)
+		   below, which will control the movement of the paddle
+		   ----------------------------------------------------- */
+		document.addEventListener("keydown", keyDownHandler, false);
+		document.addEventListener("keyup", keyUpHandler, false);
+
+		/* ----------------------------------
+		   !!!-------IMPLEMENT THIS-------!!!
+		   Event handler for key press events
+		   ---------------------------------- */
+		function keyDownHandler(e) {
+			//e.keyCode == 39 //(right arrow key)
+			//e.keyCode == 37 //(left arrow key)
+      if (e.keyCode == 39){
+        rightPressed = true;
+      }
+      else if (e.keyCode == 37){
+        leftPressed = true;
+      }
+
+		}
+
+		/* ------------------------------------
+		   !!!--------IMPLEMENT THIS--------!!!
+		   Event handler for key release events
+		   ------------------------------------ */
+		function keyUpHandler(e) {
+			//e.keyCode == 39 //(right arrow key)
+			//e.keyCode == 37 //(left arrow key
+      rightPressed = false;
+      leftPressed = false;
+		}
+
+		/* -----------------------------------------
+		   !!!-----------IMPLEMENT THIS----------!!!
+		   Detect collisions between ball and bricks
+		   ----------------------------------------- */
+		function collisionDetection() {
+
+			// Recommendation:
+			//  - loop over all bricks
+			//  - check their status
+			//  - for bricks whose status is 1
+			//  - check to see if ball is touching brick
+			//    (by comparing ballX and ballY to brick's x and y)
+			//  - if ball has hit a brick
+			//    * set brick's status to 0
+			//    * bounce (reverse ball's direction)
+			//    * check to see if user has won game
+			//      (if so, alert a congrats message and call
+			//       document.location.reload(); to reset game)
+
+
+      for(c = 0; c < brickColumnCount; c++) {
+          for(r = 0; r < brickRowCount; r++) {
+            if(bricks[c][r].status == 1){
+              if(Math.abs(bricks[c][r].x - ballX) <= 75 && Math.abs(bricks[c][r].y - ballY)<=20){
+                bricks[c][r].status = 0;
+                dy = -dy
+              }
+            }
+          }
+        }
+
+        let win = true;
+        for(c = 0; c < brickColumnCount; c++) {
+            for(r = 0; r < brickRowCount; r++) {
+              if(bricks[c][r].status == 1){
+                win = false;
+              }
+            }
+          }
+        if (win){
+          alert("win");
+        }
+
+
+      }
+
+
+
+		// Start the game with an initial call to draw()
+		draw();
+	</script>
+
+  </body>
+</html>
